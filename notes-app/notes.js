@@ -54,11 +54,11 @@ const removeNote = title => {
 
 const readNote = title => {
   const notes = loadNotes()
-  const noteToRead = notes.find(note => note.title === title)
+  const note = notes.find(note => note.title === title)
 
-  if (noteToRead) {
-    console.log(chalk.blue.inverse(noteToRead.title))
-    console.log(noteToRead.body)
+  if (note) {
+    console.log(chalk.blue.inverse(note.title))
+    console.log(note.body)
   } else {
     console.log(chalk.red.inverse('Note not found'))
   }
