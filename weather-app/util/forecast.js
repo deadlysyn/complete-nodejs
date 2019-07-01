@@ -3,9 +3,8 @@ const request = require('request')
 const weatherEndpoint = 'https://api.darksky.net/forecast/'
 const weatherToken = process.env.WEATHER_TOKEN
 
-const forecast = (longitutde, latitude, callback) => {
-  const weatherURL = `${weatherEndpoint}${weatherToken}/${longitutde},${latitude}`
-  console.log(weatherURL)
+const forecast = (longitude, latitude, callback) => {
+  const weatherURL = `${weatherEndpoint}${weatherToken}/${longitude},${latitude}`
   request({ url: weatherURL, json: true }, (error, response, body) => {
     if (error) {
       callback(Error('Unable to connect to weather service.'))
