@@ -11,6 +11,8 @@
   "rules": {
     "prettier/prettier": ["error"],
     "func-names": ["warn", "as-needed"],
-    "no-console": "off"
+    "no-console": "off",
+    "no-shadow": "off",
+    "consistent-return": "off"
   }
 }
