@@ -1,24 +1,26 @@
 const geocode = require('./util/geocode')
 const forecast = require('./util/forecast')
 
-geocode('Lexington Kentucky', (error, data) => {
-  if (error) {
-    console.log(error.message)
-  } else {
-    console.log({
-      longitutde: data.longitude,
-      latitude: data.latitude,
-      name: data.name,
-    })
-  }
-})
+const location = process.argv[2]
 
-const longitutde = '-84.497'
-const latitude = '38.0464'
-forecast(longitutde, latitude, (error, data) => {
-  if (error) {
-    console.log(error.message)
-  } else {
-    console.log(data)
-  }
-})
+if (location) {
+  geocode(location, (error, loc) => {
+    if (error) {
+      return console.log(error.message)
+    }
+    forecast(loc.longitude, loc.latitude, (error, forecast) => {
+      if (error) {
+        return console.log(error.message)
+      }
+      console.log(
+        JSON.stringify({
+          location: loc.name,
+          summary: `${forecast.summary} ${forecast.temp}`,
+          percipitation: forecast.percip,
+        })
+      )
+    })
+  })
+} else {
+  console.log("USAGE: node app.js 'City Name'")
+}
