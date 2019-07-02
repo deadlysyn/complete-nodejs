@@ -4,8 +4,8 @@ const weatherEndpoint = 'https://api.darksky.net/forecast/'
 const weatherToken = process.env.WEATHER_TOKEN
 
 const forecast = (longitude, latitude, callback) => {
-  const weatherURL = `${weatherEndpoint}${weatherToken}/${longitude},${latitude}`
-  request({ url: weatherURL, json: true }, (error, response, body) => {
+  const url = `${weatherEndpoint}${weatherToken}/${longitude},${latitude}`
+  request({ url, json: true }, (error, response, body) => {
     if (error) {
       callback(Error('Unable to connect to weather service.'))
     } else if (body.error) {
