@@ -5,7 +5,7 @@ const weatherToken = process.env.WEATHER_TOKEN
 
 const forecast = (longitude, latitude, callback) => {
   const url = `${weatherEndpoint}${weatherToken}/${longitude},${latitude}`
-  request({ url, json: true }, (error, response, body) => {
+  request({ url, json: true }, (error, { body }) => {
     if (error) {
       callback(Error('Unable to connect to weather service.'))
     } else if (body.error) {
