@@ -44,7 +44,7 @@ app.get('/help', (req, res) => {
 app.get('/weather', (req, res) => {
   if (!req.query.address) {
     return res.send({
-      error: 'no address provided',
+      error: 'No address provided',
     })
   }
 
@@ -72,7 +72,7 @@ app.get('/weather', (req, res) => {
 app.get('/products', (req, res) => {
   if (!req.query.search) {
     return res.send({
-      error: 'no search term',
+      error: 'No search term',
     })
   }
   console.log(req.query.search)
@@ -85,7 +85,7 @@ app.get('/help/*', (req, res) => {
   res.render('404', {
     title: '404',
     name: 'WeatherBot',
-    errorMessage: 'help article not found',
+    errorMessage: 'Help article not found',
   })
 })
 
@@ -93,10 +93,10 @@ app.get('*', (req, res) => {
   res.render('404', {
     title: '404',
     name: 'WeatherBot',
-    errorMessage: 'page not found',
+    errorMessage: 'Page not found',
   })
 })
 
 app.listen(3000, () => {
-  console.log('started localhost:3001')
+  console.log('Started localhost:3001')
 })
