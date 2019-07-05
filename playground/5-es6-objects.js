@@ -26,7 +26,16 @@ const product = {
 const { label: productLabel, stock, rating = 2 } = product
 console.log(productLabel, stock, rating)
 
+// will throw if product is undefined (can't unpack)
 const tx = (type, { label, stock }) => {
   console.log(type, label, stock)
 }
 tx('order', product)
+
+// default values can be provided when unpacking
+// default empty object prevents exception when product undefined
+const tx2 = (type, { label, stock = 0 } = {}) => {
+  console.log(type, label, stock)
+}
+tx2('order', product)
+tx2('order')
