@@ -1,0 +1,16 @@
+---
+applications:
+  - name: weather9000
+    command: node app.js
+    memory: 512M
+    instances: 1
+    # services:
+    #   - my-mongodb
+    routes:
+      - route: weather9000.cfapps.io
+    env:
+      # CONF: sample-config.json
+      # NODE_MODULES_CACHE: false
+      # NODE_VERBOSE: true
+      # NPM_CONFIG_LOGLEVEL: silly
+      OPTIMIZE_MEMORY: true
