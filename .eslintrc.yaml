@@ -3,16 +3,10 @@ root: true                      # project-level eslintrc
 # parser: babel-eslint            # default: esprima
 
 extends:
-  # https://www.npmjs.com/package/eslint-config-airbnb-base
   - airbnb
-  # https://github.com/prettier/eslint-config-prettier
   - prettier
-  - prettier/react
 
 plugins:
-  # - react
-  # - import
-  # https://github.com/prettier/eslint-plugin-prettier
   - prettier
 
 # settings:
