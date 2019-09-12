@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+
+const secret = process.env.SECRET || 'longRandomSecretUsedOnlyInDev'
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -39,9 +42,24 @@ const userSchema = new mongoose.Schema({
         throw new Error('Password can not be "password"')
       }
     }
-  }
+  },
+  tokens: [{
+    token: {
+      type: String,
+      required: true
+    }
+  }]
 })
 
+// use methods to define instance methods
+userSchema.methods.generateAuthToken = async function () {
+  const token = jwt.sign({ _id: this._id.toString() }, secret)
+  this.tokens = this.tokens.concat({ token })
+  await this.save()
+  return token
+}
+
+// use statics to define methods on the model
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email })
   if (!user) {
