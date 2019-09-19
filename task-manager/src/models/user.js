@@ -52,6 +52,13 @@ const userSchema = new mongoose.Schema({
 })
 
 // use methods to define instance methods
+userSchema.methods.toJSON = function () {
+  const userObject = this.toObject()
+  delete userObject.password
+  delete userObject.tokens
+  return userObject
+}
+
 userSchema.methods.generateAuthToken = async function () {
   const token = jwt.sign({ _id: this._id.toString() }, secret)
   this.tokens = this.tokens.concat({ token })
