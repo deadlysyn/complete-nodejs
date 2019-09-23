@@ -7,14 +7,6 @@ const app = express()
 const port = process.env.PORT || 3000
 
 // middleware should come before other app.use() calls
-// app.use((req, res, next) => {
-//   if (req.method === 'GET') {
-//     res.send('GET requests are disabled')
-//   } else {
-//     next()
-//   }
-// })
-
 // maintenance mode
 // app.use((req, res, next) => {
 //   res.status(503).send('Temporarily in maintenance mode')
