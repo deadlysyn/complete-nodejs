@@ -67,8 +67,11 @@ userSchema.virtual('tasks', {
 // use methods to define instance methods
 userSchema.methods.toJSON = function () {
   const userObject = this.toObject()
+
   delete userObject.password
   delete userObject.tokens
+  delete userObject.avatar
+
   return userObject
 }
 
