@@ -6,6 +6,7 @@ const auth = require('../middleware/auth')
 const { sendWelcomeEmail, sendCancelEmail } = require('../emails/account')
 const router = new express.Router()
 
+// create user
 router.post('/users', async (req, res) => {
   const user = new User(req.body)
   try {
@@ -18,6 +19,7 @@ router.post('/users', async (req, res) => {
   }
 })
 
+// login
 router.post('/users/login', async (req, res) => {
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password)
@@ -28,6 +30,7 @@ router.post('/users/login', async (req, res) => {
   }
 })
 
+// logout
 router.post('/users/logout', auth, async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => {
@@ -40,6 +43,7 @@ router.post('/users/logout', auth, async (req, res) => {
   }
 })
 
+// logout all (clear all jwt tokens for user)
 router.post('/users/logoutAll', auth, async (req, res) => {
   try {
     req.user.tokens = []
@@ -50,10 +54,12 @@ router.post('/users/logoutAll', auth, async (req, res) => {
   }
 })
 
+// show profile
 router.get('/users/me', auth, async (req, res) => {
   res.send(req.user)
 })
 
+// update user
 router.patch('/users/me', auth, async (req, res) => {
   const updates = Object.keys(req.body)
   const allowedUpdates = ['name', 'email', 'password', 'age']
@@ -72,6 +78,7 @@ router.patch('/users/me', auth, async (req, res) => {
   }
 })
 
+// delete user
 router.delete('/users/me', auth, async (req, res) => {
   try {
     await req.user.remove()
@@ -95,6 +102,7 @@ const upload = multer({
   }
 })
 
+// upload avatar
 router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
   const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
   req.user.avatar = buffer
@@ -104,6 +112,7 @@ router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) 
   res.status(400).send({ error: error.message})
 })
 
+// delete avatar
 router.delete('/users/me/avatar', auth, async (req, res) => {
   req.user.avatar = undefined
   await req.user.save()
@@ -112,6 +121,7 @@ router.delete('/users/me/avatar', auth, async (req, res) => {
   res.status(400).send({ error: error.message})
 })
 
+// display avatar
 router.get('/users/:id/avatar', async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
