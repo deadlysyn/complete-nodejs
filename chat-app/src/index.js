@@ -13,16 +13,22 @@ const documentRoot = path.join(__dirname, '../public')
 
 app.use(express.static(documentRoot))
 
-let count = 0
-
 io.on('connection', (socket) => {
   console.log('new websocket connection')
-  socket.emit('countUpdated', count)
-  socket.on('increment', () => {
-    count++
-    // socket.emit('countUpdated', count) // one client
-    io.emit('countUpdated', count) // all clients
+
+  socket.emit('message', 'Welcome!')
+
+  socket.on('sendMessage', (message) => {
+    io.emit('message', message)
   })
+
+  // socket.emit('countUpdated', count)
+
+  // socket.on('increment', () => {
+  //   count++
+  //   // socket.emit('countUpdated', count) // one client
+  //   io.emit('countUpdated', count) // all clients
+  // })
 })
 
 server.listen(port, () => {
