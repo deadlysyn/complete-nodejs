@@ -16,19 +16,21 @@ app.use(express.static(documentRoot))
 io.on('connection', (socket) => {
   console.log('new websocket connection')
 
-  socket.emit('message', 'Welcome!')
+  socket.emit('message', 'Welcome!') // unicast
+  socket.broadcast.emit('message', 'new user has joined') // broadcast
 
   socket.on('sendMessage', (message) => {
-    io.emit('message', message)
+    io.emit('message', message) // multicast (all users beside self)
   })
 
-  // socket.emit('countUpdated', count)
+  socket.on('sendLocation', (coords) => {
+    // io.emit('message', `Location: ${position.longitude} ${position.latitude}`)
+    socket.broadcast.emit('message', `Location: https://google.com/maps?q=${coords.latitude},${coords.longitude}`)
+  })
 
-  // socket.on('increment', () => {
-  //   count++
-  //   // socket.emit('countUpdated', count) // one client
-  //   io.emit('countUpdated', count) // all clients
-  // })
+  socket.on('disconnect', () => {
+    io.emit('message', 'a user has left')
+  })
 })
 
 server.listen(port, () => {
