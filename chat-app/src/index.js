@@ -17,25 +17,25 @@ app.use(express.static(documentRoot))
 io.on('connection', (socket) => {
   console.log('new websocket connection')
 
-  socket.emit('message', 'Welcome!') // unicast
-  socket.broadcast.emit('message', 'new user has joined') // broadcast
+  socket.emit('message', 'Welcome!')
+  socket.broadcast.emit('message', 'A new user has joined...')
 
   socket.on('sendMessage', (message, callback) => {
     const filter = new Filter()
     if (filter.isProfane(message)) {
-      return callback('profanity detected')
+      return callback('Profanity detected!')
     }
-    io.emit('message', message) // multicast (all users beside self)
+    io.emit('message', message)
     callback()
   })
 
   socket.on('sendLocation', (coords, callback) => {
-    io.emit('message', `Location: https://google.com/maps?q=${coords.latitude},${coords.longitude}`)
+    io.emit('locationMessage', `https://google.com/maps?q=${coords.latitude},${coords.longitude}`)
     callback()
   })
 
   socket.on('disconnect', () => {
-    io.emit('message', 'a user has left')
+    io.emit('message', 'A user has left.')
   })
 })
 
