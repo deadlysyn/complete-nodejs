@@ -2,27 +2,41 @@
 <html>
   <head>
     <title>Chaticus Max</title>
+    <link rel="icon" href="/img/favicon.png" />
+    <link rel="stylesheet" href="/css/styles.min.css" />
   </head>
   <body>
-    <h1>Welcome to the Chat!</h1>
-
-    <div id="messages"></div>
-
-    <form id="message-form">
-      <input name="message" placeholder="enter message" />
-      <button type="submit">send</button>
-    </form>
-    <button id="send-location">share location</button>
+    <div class="chat">
+      <div class="chat__sidebar"></div>
+      <div class="chat__main">
+        <div id="messages" class="chat__messages"></div>
+        <div class="compose">
+          <form id="message-form">
+            <input name="message" placeholder="enter message" />
+            <button type="submit">send</button>
+          </form>
+          <button id="send-location">share location</button>
+        </div>
+      </div>
+    </div>
 
     <script id="message-template" type="text/html">
-      <div>
-        <p>{{createdAt}} - {{message}}</p>
+      <div class="message">
+        <p>
+          <span class="message__name">Foobah</span>
+          <span class="mesage__meta">{{createdAt}}</span>
+        </p>
+        <p>{{message}}</p>
       </div>
     </script>
 
     <script id="location-template" type="text/html">
-      <div>
-        <p>{{createdAt}} - <a href="{{url}}" target="_blank">My current location</a></p>
+      <div class="message">
+        <p>
+          <span class="message__name">Foobah</span>
+          <span class="mesage__meta">{{createdAt}}</span>
+        </p>
+        <p><a href="{{url}}" target="_blank">My current location</a></p>
       </div>
     </script>
 
